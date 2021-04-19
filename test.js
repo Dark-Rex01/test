@@ -26,14 +26,14 @@ connection.connect(function(err) {
 
 app.use(bodyParser.json())
 
-app.get('/read', function(req,res) {
-
-    connection.query('SELECT `id`, `name` FROM `users`', function(err, result) {
+app.get('/read/:id', function(req,res) {
+   const id= req.params.id;
+   connection.query('SELECT `id`, `name` FROM `users` WHERE `id` = ?', [id], function(err, result) {
       if(err) {
          throw err
       }
       else{
-        console.log(result);
+        res.send(result);
       }
     });
 
